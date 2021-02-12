@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SkyengDictionary</string>
+    <string name="words_to_search">Words to search</string>
+</resources>
