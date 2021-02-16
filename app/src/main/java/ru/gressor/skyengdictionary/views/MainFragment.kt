@@ -1,7 +1,5 @@
 package ru.gressor.skyengdictionary.views
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -58,6 +56,8 @@ class MainFragment: BaseView(), MainContract.View,
     }
 
     private fun showWords(wordList: List<DictWord>) {
+        makeVisible(recycler = true)
+
         if (adapter == null) {
             adapter = WordListAdapter(wordList, this)
             binding.rvWords.layoutManager = LinearLayoutManager(context)
@@ -67,11 +67,32 @@ class MainFragment: BaseView(), MainContract.View,
         }
     }
 
-    private fun showLoading(progress: Int) {
+    private fun showLoading(progress: Int?) {
+        makeVisible(loading = true)
 
+        if (progress == null) {
+            binding.pbInfiniteProgress.visibility = View.VISIBLE
+            binding.pbMeasuredProgress.visibility = View.GONE
+        } else {
+            binding.pbInfiniteProgress.visibility = View.GONE
+            binding.pbMeasuredProgress.visibility = View.VISIBLE
+            binding.pbMeasuredProgress.progress = progress
+        }
     }
 
     private fun showError(error: Throwable) {
+        makeVisible(error = true)
 
+        binding.tvErrorMessage.text = error.message
+    }
+
+    private fun makeVisible(
+        recycler: Boolean = false,
+        loading: Boolean  = false,
+        error: Boolean  = false
+    ) {
+        binding.rvWords.visibility = if (recycler) View.VISIBLE else View.GONE
+        binding.containerLoading.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.containerError.visibility = if (error) View.VISIBLE else View.GONE
     }
 }

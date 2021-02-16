@@ -29,6 +29,10 @@ class MainPresenter(
                 .observeOn(schedulersProvider.ui())
                 .subscribeWith(
                     object : DisposableSingleObserver<DictData>() {
+                        override fun onStart() {
+                            view?.renderData(DictData.Loading(null))
+                        }
+
                         override fun onSuccess(t: DictData) {
                             view?.renderData(t)
                         }

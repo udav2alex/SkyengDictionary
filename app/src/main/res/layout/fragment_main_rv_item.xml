@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_word"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="пример + еще 2 перевода" />
+        tools:text="пример +2 других варианта" />
 
     <TextView
         android:id="@+id/tv_word_id"

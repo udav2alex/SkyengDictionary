@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.gressor.skyengdictionary.R
-import ru.gressor.skyengdictionary.databinding.ListItemWordBinding
+import ru.gressor.skyengdictionary.databinding.FragmentMainRvItemBinding
 import ru.gressor.skyengdictionary.entities.DictWord
 
 class WordListAdapter(
@@ -19,7 +19,7 @@ class WordListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordHolder =
         WordHolder(
-            ListItemWordBinding.inflate(
+            FragmentMainRvItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -31,7 +31,7 @@ class WordListAdapter(
     override fun getItemCount() = wordList.size
 
     inner class WordHolder(
-        private val binding: ListItemWordBinding
+        private val binding: FragmentMainRvItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = with(binding) {
