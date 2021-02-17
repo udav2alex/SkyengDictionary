@@ -6,16 +6,6 @@ import ru.gressor.skyengdictionary.entities.DictWord
 
 class MainContract {
 
-    interface View {
-        fun renderData(data: DictData)
-    }
-
-    interface Presenter {
-        fun attachView(view: View)
-        fun detachView(view: View)
-        fun getData(word: String, isOnline: Boolean)
-    }
-
     interface Interactor {
         fun getData(word: String, isOnline: Boolean): Single<DictData>
     }
