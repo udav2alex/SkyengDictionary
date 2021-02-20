@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size_normal">18sp</dimen>
+    <dimen name="gap_half_8dp">8dp</dimen>
+    <dimen name="gap_standard_16dp">16dp</dimen>
 </resources>
