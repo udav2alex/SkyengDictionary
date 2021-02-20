@@ -10,14 +10,10 @@ import ru.gressor.skyengdictionary.data.DataSourceLocal
 import ru.gressor.skyengdictionary.data.DataSourceRemote
 import ru.gressor.skyengdictionary.interactors.MainInteractor
 import ru.gressor.skyengdictionary.repos.MainRepository
+import javax.inject.Inject
 
-class MainViewModel(
-    private val interactor: MainContract.Interactor = MainInteractor(
-        MainRepository(DataSourceRemote()),
-        MainRepository(DataSourceLocal())
-    ),
-    override val schedulersProvider: SchedulersProvider = MainSchedulersProvider(),
-    override val compositeDisposable: CompositeDisposable = CompositeDisposable()
+class MainViewModel @Inject constructor(
+    private val interactor: MainContract.Interactor
 ) : BaseViewModel<DictData>() {
 
     init {
