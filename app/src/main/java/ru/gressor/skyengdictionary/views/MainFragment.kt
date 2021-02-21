@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.gressor.skyengdictionary.App
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.gressor.skyengdictionary.databinding.FragmentMainBinding
 import ru.gressor.skyengdictionary.entities.DictData
 import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.viewmodels.MainViewModel
-import javax.inject.Inject
 
 class MainFragment : Fragment(),
     WordListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
@@ -23,16 +21,7 @@ class MainFragment : Fragment(),
     private lateinit var binding: FragmentMainBinding
     private var adapter: WordListAdapter? = null
 
-    init {
-        App.getInstance().appComponent.inject(this)
-    }
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-    }
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,12 +35,20 @@ class MainFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
+        initViewModel()
 
         binding.etWord.setOnEditorActionListener(this)
         binding.ilWordContainer.setStartIconOnClickListener {
             onEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null)
         }
+    }
+
+    private fun initViewModel() {
+        // TODO: как правильно сохранять модель для фрагмента при ConfigChange?
+        val model: MainViewModel by requireActivity().viewModel()
+        viewModel = model
+
+        viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
