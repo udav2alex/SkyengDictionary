@@ -110,7 +110,7 @@ class MainFragment : Fragment(),
     private fun showError(error: Throwable) {
         makeVisible(error = true)
 
-        binding.tvErrorMessage.text = error.message
+        binding.tvErrorMessage.text = "$error"
     }
 
     private fun makeVisible(

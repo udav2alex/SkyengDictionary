@@ -1,6 +1,6 @@
-package ru.gressor.skyengdictionary.data
+package ru.gressor.skyengdictionary.data.remote
 
-import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.gressor.skyengdictionary.entities.DictWord
@@ -8,5 +8,5 @@ import ru.gressor.skyengdictionary.entities.DictWord
 interface ServiceAPI {
 
     @GET("words/search")
-    fun searchFor(@Query("search") word: String) : Single<List<DictWord>>
+    suspend fun searchFor(@Query("search") word: String) : Response<List<DictWord>>
 }
