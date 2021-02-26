@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.presenters
+package ru.gressor.skyengdictionary.viewmodels
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -10,17 +10,15 @@ import ru.gressor.skyengdictionary.data.DataSourceLocal
 import ru.gressor.skyengdictionary.data.DataSourceRemote
 import ru.gressor.skyengdictionary.interactors.MainInteractor
 import ru.gressor.skyengdictionary.repos.MainRepository
+import javax.inject.Inject
 
-class MainPresenter(
-    private val interactor: MainContract.Interactor = MainInteractor(
-        MainRepository(DataSourceRemote()),
-        MainRepository(DataSourceLocal())
-    ),
-    private val schedulersProvider: SchedulersProvider = MainSchedulersProvider(),
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-) : MainContract.Presenter {
+class MainViewModel @Inject constructor(
+    private val interactor: MainContract.Interactor
+) : BaseViewModel<DictData>() {
 
-    var view: MainContract.View? = null
+    init {
+        stateMutableLiveData.value = DictData.Empty
+    }
 
     override fun getData(word: String, isOnline: Boolean) {
         compositeDisposable.add(
@@ -30,31 +28,18 @@ class MainPresenter(
                 .subscribeWith(
                     object : DisposableSingleObserver<DictData>() {
                         override fun onStart() {
-                            view?.renderData(DictData.Loading(null))
+                            stateMutableLiveData.value = DictData.Loading(null)
                         }
 
                         override fun onSuccess(t: DictData) {
-                            view?.renderData(t)
+                            stateMutableLiveData.value = t
                         }
 
                         override fun onError(e: Throwable) {
-                            view?.renderData(DictData.Error(e))
+                            stateMutableLiveData.value = DictData.Error(e)
                         }
                     }
                 )
         )
-    }
-
-    override fun attachView(view: MainContract.View) {
-        if (this.view == null) {
-            this.view = view
-        }
-    }
-
-    override fun detachView(view: MainContract.View) {
-        compositeDisposable.clear()
-        if (this.view != null) {
-            this.view = null
-        }
     }
 }

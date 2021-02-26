@@ -21,7 +21,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_word"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,9 +76,30 @@
 
         <TextView
             android:id="@+id/tv_error_message"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/gap_standard_16dp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/container_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/il_word_container">
+
+        <TextView
+            android:id="@+id/tv_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="@dimen/gap_standard_16dp"
+            android:text="@string/type_word_or_phrase_to_translate" />
 
     </FrameLayout>
 

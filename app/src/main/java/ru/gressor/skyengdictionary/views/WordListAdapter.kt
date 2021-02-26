@@ -28,13 +28,20 @@ class WordListAdapter(
         holder.bind(position)
     }
 
-    override fun getItemCount() = wordList.size
+    override fun getItemCount() = if (wordList.isNullOrEmpty()) 1 else wordList.size
 
     inner class WordHolder(
         private val binding: FragmentMainRvItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = with(binding) {
+            if (wordList.isNullOrEmpty()) {
+                tvWord.text = ""
+                tvWordId.text = ""
+                tvTranslation.text = binding.root.context.getString(R.string.no_translations)
+                return
+            }
+
             wordList[position].let { word ->
                 itemView.setOnClickListener {
                     onItemClickListener.onItemClick(word)
