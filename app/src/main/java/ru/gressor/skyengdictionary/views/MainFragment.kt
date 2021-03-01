@@ -10,18 +10,18 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ru.gressor.skyengdictionary.MainActivity
 import ru.gressor.skyengdictionary.databinding.FragmentMainBinding
 import ru.gressor.skyengdictionary.entities.DictData
 import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.viewmodels.MainViewModel
 
 class MainFragment : Fragment(),
-    WordListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
-
+    MainWordListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
     private lateinit var binding: FragmentMainBinding
-    private var adapter: WordListAdapter? = null
+    private var adapter: MainWordListAdapter? = null
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,22 +33,14 @@ class MainFragment : Fragment(),
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding.rvWords.layoutManager = LinearLayoutManager(context)
 
-        initViewModel()
+        viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
 
         binding.etWord.setOnEditorActionListener(this)
         binding.ilWordContainer.setStartIconOnClickListener {
             onEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null)
         }
-    }
-
-    private fun initViewModel() {
-        // TODO: как правильно сохранять модель для фрагмента при ConfigChange?
-        val model: MainViewModel by requireActivity().viewModel()
-        viewModel = model
-
-        viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
     }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
@@ -75,7 +67,10 @@ class MainFragment : Fragment(),
     }
 
     override fun onItemClick(word: DictWord) {
-
+        val activity = requireActivity()
+        if (activity is MainActivity) {
+            activity.showFragment(WordFragment.getInstance(word))
+        }
     }
 
     private fun showEmpty() {
@@ -86,10 +81,12 @@ class MainFragment : Fragment(),
         makeVisible(recycler = true)
 
         if (adapter == null) {
-            adapter = WordListAdapter(wordList, this)
-            binding.rvWords.layoutManager = LinearLayoutManager(context)
+            adapter = MainWordListAdapter(wordList, this)
             binding.rvWords.adapter = adapter
         } else {
+            if (binding.rvWords.adapter == null) {
+                binding.rvWords.adapter = adapter
+            }
             adapter!!.setData(wordList)
         }
     }

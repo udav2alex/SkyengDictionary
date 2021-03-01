@@ -28,5 +28,4 @@ val mainFragmentModule = module {
     viewModel {
         MainViewModel(get())
     }
-    // TODO: не получилось viewModel<MainViewModel>()! В чем проблема?
 }
