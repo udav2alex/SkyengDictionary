@@ -7,10 +7,10 @@ import ru.gressor.skyengdictionary.R
 import ru.gressor.skyengdictionary.databinding.FragmentMainRvItemBinding
 import ru.gressor.skyengdictionary.entities.DictWord
 
-class MainWordListAdapter(
+class MainListAdapter(
     private var wordList: List<DictWord>,
     private var onItemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<MainWordListAdapter.WordHolder>() {
+) : RecyclerView.Adapter<MainListAdapter.WordHolder>() {
 
     fun setData(wordList: List<DictWord>) {
         this.wordList = wordList

@@ -11,7 +11,7 @@ import ru.gressor.skyengdictionary.entities.DictWord
 
 class WordFragment : Fragment() {
     private lateinit var binding: FragmentWordBinding
-    private lateinit var adapter: WordTranslateListAdapter
+    private lateinit var adapter: WordListAdapter
     private var word: DictWord? = null
 
     override fun onCreateView(
@@ -28,7 +28,7 @@ class WordFragment : Fragment() {
         binding.tvWordCaption.text = word?.text
 
         word?.meanings?.let {
-            adapter = WordTranslateListAdapter(it)
+            adapter = WordListAdapter(it)
             binding.rvTranslations.layoutManager = LinearLayoutManager(context)
             binding.rvTranslations.adapter = adapter
         }

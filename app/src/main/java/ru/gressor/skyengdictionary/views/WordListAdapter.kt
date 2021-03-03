@@ -8,9 +8,9 @@ import ru.gressor.skyengdictionary.R
 import ru.gressor.skyengdictionary.databinding.FragmentWordRvItemBinding
 import ru.gressor.skyengdictionary.entities.Meaning2
 
-class WordTranslateListAdapter(
+class WordListAdapter(
     private val meanings: List<Meaning2>
-) : RecyclerView.Adapter<WordTranslateListAdapter.TranslationHolder>() {
+) : RecyclerView.Adapter<WordListAdapter.TranslationHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TranslationHolder =
         TranslationHolder(

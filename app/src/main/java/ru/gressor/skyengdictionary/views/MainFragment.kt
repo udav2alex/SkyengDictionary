@@ -17,9 +17,9 @@ import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.viewmodels.MainViewModel
 
 class MainFragment : Fragment(),
-    MainWordListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
+    MainListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
     private lateinit var binding: FragmentMainBinding
-    private var adapter: MainWordListAdapter? = null
+    private var adapter: MainListAdapter? = null
 
     private val viewModel: MainViewModel by viewModel()
 
@@ -81,7 +81,7 @@ class MainFragment : Fragment(),
         makeVisible(recycler = true)
 
         if (adapter == null) {
-            adapter = MainWordListAdapter(wordList, this)
+            adapter = MainListAdapter(wordList, this)
             binding.rvWords.adapter = adapter
         } else {
             if (binding.rvWords.adapter == null) {

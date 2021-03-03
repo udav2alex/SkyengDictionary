@@ -7,6 +7,9 @@
     <string name="play_sound">Play sound</string>
     <string name="favorite_toggle">Favorite toggle</string>
     <string name="meaning_picture">Meaning picture</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_history">History</string>
+    <string name="menu_settings">Settings</string>
     <plurals name="translation_variants">
         <item quantity="one">+%1$d other option</item>
         <item quantity="other">+%1$d other options</item>
