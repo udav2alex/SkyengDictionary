@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.gressor.skyengdictionary.MainActivity
 import ru.gressor.skyengdictionary.databinding.FragmentMainBinding
-import ru.gressor.skyengdictionary.entities.DictData
+import ru.gressor.skyengdictionary.entities.SearchData
 import ru.gressor.skyengdictionary.entities.DictWord
-import ru.gressor.skyengdictionary.viewmodels.MainViewModel
+import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
-class MainFragment : Fragment(),
-    MainListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
+class SearchFragment : Fragment(),
+    SearchListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
     private lateinit var binding: FragmentMainBinding
-    private var adapter: MainListAdapter? = null
+    private var adapter: SearchListAdapter? = null
 
-    private val viewModel: MainViewModel by viewModel()
+    private val viewModel: SearchViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,12 +57,12 @@ class MainFragment : Fragment(),
         return false
     }
 
-    private fun renderData(data: DictData) {
+    private fun renderData(data: SearchData) {
         when (data) {
-            is DictData.Empty -> showEmpty()
-            is DictData.Success -> showWords(data.wordList)
-            is DictData.Loading -> showLoading(data.progress)
-            is DictData.Error -> showError(data.error)
+            is SearchData.Empty -> showEmpty()
+            is SearchData.Success -> showWords(data.wordList)
+            is SearchData.Loading -> showLoading(data.progress)
+            is SearchData.Error -> showError(data.error)
         }
     }
 
@@ -81,7 +81,7 @@ class MainFragment : Fragment(),
         makeVisible(recycler = true)
 
         if (adapter == null) {
-            adapter = MainListAdapter(wordList, this)
+            adapter = SearchListAdapter(wordList, this)
             binding.rvWords.adapter = adapter
         } else {
             if (binding.rvWords.adapter == null) {

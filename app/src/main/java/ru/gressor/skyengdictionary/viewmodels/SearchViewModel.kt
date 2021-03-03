@@ -4,18 +4,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.entities.DictData
+import ru.gressor.skyengdictionary.entities.SearchData
 
-class MainViewModel constructor(
-    private val interactor: MainContract.Interactor
-) : BaseViewModel<DictData>() {
+class SearchViewModel constructor(
+    private val interactor: MainContract.Interactor<SearchData>
+) : BaseViewModel<SearchData>() {
 
     init {
-        stateMutableLiveData.value = DictData.Empty
+        stateMutableLiveData.value = SearchData.Empty
     }
 
     override fun getData(word: String, isOnline: Boolean) {
-        stateMutableLiveData.value = DictData.Loading(null)
+        stateMutableLiveData.value = SearchData.Loading(null)
         cancelJob()
 
         viewModelCoroutineScope.launch {
@@ -26,6 +26,6 @@ class MainViewModel constructor(
     }
 
     override fun handleError(throwable: Throwable) {
-        stateMutableLiveData.value = DictData.Error(throwable)
+        stateMutableLiveData.value = SearchData.Error(throwable)
     }
 }

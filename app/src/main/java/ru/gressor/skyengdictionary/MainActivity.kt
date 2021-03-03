@@ -3,11 +3,7 @@ package ru.gressor.skyengdictionary
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.gressor.skyengdictionary.views.HistoryFragment
-import ru.gressor.skyengdictionary.views.MainFragment
-import ru.gressor.skyengdictionary.views.SettingsFragment
-import java.lang.IllegalArgumentException
+import ru.gressor.skyengdictionary.views.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fl_container, MainFragment())
+                .replace(R.id.fl_container, SearchFragment())
                 .commitNow()
         }
 

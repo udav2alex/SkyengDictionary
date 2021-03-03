@@ -1,27 +1,26 @@
 package ru.gressor.skyengdictionary
 
-import ru.gressor.skyengdictionary.entities.DictData
-import ru.gressor.skyengdictionary.entities.DictWord
-
 class MainContract {
 
-    interface Interactor {
-        suspend fun getData(word: String, isOnline: Boolean): DictData
+    interface Interactor<T> {
+        suspend fun getData(word: String, isOnline: Boolean): T // DictData
     }
 
-    interface Repository {
-        suspend fun getData(word: String): List<DictWord>
+    interface Repository<T> {
+        suspend fun getData(word: String): T // List<DictWord>
     }
 
-    interface RepositoryLocal: Repository {
-        suspend fun saveData(word: String)
+    interface RepositoryLocal<T>: Repository<T> {
+        suspend fun saveData(word: String, data: T)
+        suspend fun saveWord(word: String)
     }
 
-    interface DataSource {
-        suspend fun getData(word: String): List<DictWord>
+    interface DataSource<T> {
+        suspend fun getData(word: String): T // List<DictWord>
     }
 
-    interface DataSourceLocal: DataSource {
-        suspend fun saveData(word: String)
+    interface DataSourceLocal<T>: DataSource<T> {
+        suspend fun saveData(word: String, data: T)
+        suspend fun saveWord(word: String)
     }
 }

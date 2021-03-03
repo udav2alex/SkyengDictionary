@@ -9,10 +9,12 @@ import ru.gressor.skyengdictionary.data.local.HistoryDAO
 import ru.gressor.skyengdictionary.data.local.HistoryRoomDB
 import ru.gressor.skyengdictionary.data.remote.DataSourceRemote
 import ru.gressor.skyengdictionary.data.remote.RetrofitImpl
-import ru.gressor.skyengdictionary.interactors.MainInteractor
-import ru.gressor.skyengdictionary.repos.MainRepository
-import ru.gressor.skyengdictionary.repos.RepositoryLocal
-import ru.gressor.skyengdictionary.viewmodels.MainViewModel
+import ru.gressor.skyengdictionary.entities.SearchData
+import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.skyengdictionary.interactors.SearchInteractor
+import ru.gressor.skyengdictionary.repos.SearchRepository
+import ru.gressor.skyengdictionary.repos.SearchRepositoryLocal
+import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
 val applicationModule = module {
     single<HistoryRoomDB> {
@@ -25,20 +27,20 @@ val applicationModule = module {
         get<HistoryRoomDB>().getDAO()
     }
 
-    single<MainContract.RepositoryLocal> {
-        RepositoryLocal(DataSourceLocal(get()))
+    single<MainContract.RepositoryLocal<List<DictWord>>> {
+        SearchRepositoryLocal(DataSourceLocal(get()))
     }
 
-    single<MainContract.Repository> {
-        MainRepository(DataSourceRemote(RetrofitImpl()))
+    single<MainContract.Repository<List<DictWord>>> {
+        SearchRepository(DataSourceRemote(RetrofitImpl()))
     }
 }
 
 val mainFragmentModule = module {
-    factory<MainContract.Interactor> {
-        MainInteractor(get(), get())
+    factory<MainContract.Interactor<SearchData>> {
+        SearchInteractor(get(), get())
     }
     viewModel {
-        MainViewModel(get())
+        SearchViewModel(get())
     }
 }

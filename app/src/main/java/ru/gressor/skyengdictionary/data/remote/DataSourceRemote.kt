@@ -5,7 +5,7 @@ import ru.gressor.skyengdictionary.entities.DictWord
 
 class DataSourceRemote(
     private val remoteProvider: RetrofitImpl
-) : MainContract.DataSource {
+) : MainContract.DataSource<List<DictWord>> {
 
     override suspend fun getData(word: String): List<DictWord> = remoteProvider.getData(word)
 }
