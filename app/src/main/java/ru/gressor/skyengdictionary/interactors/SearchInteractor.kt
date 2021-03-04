@@ -14,7 +14,7 @@ class SearchInteractor constructor(
 
     override suspend fun getData(word: String, isOnline: Boolean): SearchData {
         CoroutineScope(Dispatchers.IO).launch {
-            offlineRepository.saveWord(word)
+            offlineRepository.saveHistory(word)
         }
 
         return SearchData.Success(

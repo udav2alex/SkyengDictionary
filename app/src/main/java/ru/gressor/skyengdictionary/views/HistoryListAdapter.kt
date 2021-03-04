@@ -7,8 +7,13 @@ import ru.gressor.skyengdictionary.data.local.HistoryItem
 import ru.gressor.skyengdictionary.databinding.FragmentHistoryRvItemBinding
 
 class HistoryListAdapter(
-    private val list: List<HistoryItem>
+    private var itemsList: List<HistoryItem>
 ) : RecyclerView.Adapter<HistoryListAdapter.HistoryItemHolder>() {
+
+    fun setData(itemsList: List<HistoryItem>) {
+        this.itemsList = itemsList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HistoryItemHolder(
@@ -18,10 +23,10 @@ class HistoryListAdapter(
         )
 
     override fun onBindViewHolder(holder: HistoryItemHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(itemsList[position])
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = itemsList.size
 
     inner class HistoryItemHolder(
         private val binding: FragmentHistoryRvItemBinding

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.gressor.skyengdictionary.R
-import ru.gressor.skyengdictionary.databinding.FragmentMainRvItemBinding
+import ru.gressor.skyengdictionary.databinding.FragmentSearchRvItemBinding
 import ru.gressor.skyengdictionary.entities.DictWord
 
 class SearchListAdapter(
@@ -19,7 +19,7 @@ class SearchListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordHolder =
         WordHolder(
-            FragmentMainRvItemBinding.inflate(
+            FragmentSearchRvItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -31,7 +31,7 @@ class SearchListAdapter(
     override fun getItemCount() = if (wordList.isNullOrEmpty()) 1 else wordList.size
 
     inner class WordHolder(
-        private val binding: FragmentMainRvItemBinding
+        private val binding: FragmentSearchRvItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int) = with(binding) {

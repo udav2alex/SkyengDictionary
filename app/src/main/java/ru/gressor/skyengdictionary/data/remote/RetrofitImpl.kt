@@ -27,7 +27,6 @@ class RetrofitImpl(
             .baseUrl(baseUrl)
             .client(
                 OkHttpClient.Builder()
-                    // TODO Как BaseInterceptor может что-то сообщить в getData?
                     .addInterceptor(BaseInterceptor.interceptor)
                     .addInterceptor(HttpLoggingInterceptor().setLevel(BODY))
                     .build()

@@ -2,18 +2,21 @@ package ru.gressor.skyengdictionary.di
 
 import androidx.room.Room
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.data.local.DataSourceLocal
-import ru.gressor.skyengdictionary.data.local.HistoryDAO
-import ru.gressor.skyengdictionary.data.local.HistoryRoomDB
-import ru.gressor.skyengdictionary.data.remote.DataSourceRemote
+import ru.gressor.skyengdictionary.data.local.*
+import ru.gressor.skyengdictionary.data.remote.SearchDataSourceRemote
 import ru.gressor.skyengdictionary.data.remote.RetrofitImpl
 import ru.gressor.skyengdictionary.entities.SearchData
 import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.skyengdictionary.entities.HistoryData
+import ru.gressor.skyengdictionary.interactors.HistoryInteractor
 import ru.gressor.skyengdictionary.interactors.SearchInteractor
+import ru.gressor.skyengdictionary.repos.HistoryRepository
 import ru.gressor.skyengdictionary.repos.SearchRepository
 import ru.gressor.skyengdictionary.repos.SearchRepositoryLocal
+import ru.gressor.skyengdictionary.viewmodels.HistoryViewModel
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
 val applicationModule = module {
@@ -22,25 +25,37 @@ val applicationModule = module {
             .fallbackToDestructiveMigration()
             .build()
     }
-
     single<HistoryDAO> {
         get<HistoryRoomDB>().getDAO()
     }
-
+    single<MainContract.Repository<List<HistoryItem>>>(named(NAME_HISTORY)) {
+        HistoryRepository(HistoryDataSource(get()))
+    }
     single<MainContract.RepositoryLocal<List<DictWord>>> {
-        SearchRepositoryLocal(DataSourceLocal(get()))
+        SearchRepositoryLocal(SearchDataSourceLocal(get()))
     }
+    single<MainContract.Repository<List<DictWord>>>(named(NAME_SEARCH)) {
+        SearchRepository(SearchDataSourceRemote(RetrofitImpl()))
+    }
+}
 
-    single<MainContract.Repository<List<DictWord>>> {
-        SearchRepository(DataSourceRemote(RetrofitImpl()))
+val searchFragmentModule = module {
+    factory<MainContract.Interactor<SearchData>>(named(NAME_SEARCH)) {
+        SearchInteractor(get(named(NAME_SEARCH)), get())
+    }
+    viewModel(named(NAME_SEARCH)) {
+        SearchViewModel(get(named(NAME_SEARCH)))
     }
 }
 
-val mainFragmentModule = module {
-    factory<MainContract.Interactor<SearchData>> {
-        SearchInteractor(get(), get())
+val historyFragmentModule = module {
+    factory<MainContract.Interactor<HistoryData>>(named(NAME_HISTORY)) {
+        HistoryInteractor(get(named(NAME_HISTORY)))
     }
-    viewModel {
-        SearchViewModel(get())
+    viewModel(named(NAME_HISTORY)) {
+        HistoryViewModel(get(named(NAME_HISTORY)))
     }
 }
+
+const val NAME_HISTORY = "history"
+const val NAME_SEARCH = "search"

@@ -3,7 +3,7 @@ package ru.gressor.skyengdictionary.data.remote
 import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.entities.DictWord
 
-class DataSourceRemote(
+class SearchDataSourceRemote(
     private val remoteProvider: RetrofitImpl
 ) : MainContract.DataSource<List<DictWord>> {
 

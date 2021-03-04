@@ -3,19 +3,20 @@ package ru.gressor.skyengdictionary.data.local
 import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.entities.DictWord
 
-class DataSourceLocal(
+class SearchDataSourceLocal(
     private val dao: HistoryDAO
 ): MainContract.DataSourceLocal<List<DictWord>> {
 
-    override suspend fun saveWord(word: String) {
-        dao.saveHistoryItem(HistoryItem(word))
+    override suspend fun saveHistory(search: String) {
+        dao.saveHistoryItem(HistoryItem(search))
     }
 
     override suspend fun getData(word: String): List<DictWord> {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
+        return emptyList()
     }
 
     override suspend fun saveData(word: String, data: List<DictWord>) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 }

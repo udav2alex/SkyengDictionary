@@ -4,7 +4,8 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import ru.gressor.skyengdictionary.di.applicationModule
-import ru.gressor.skyengdictionary.di.mainFragmentModule
+import ru.gressor.skyengdictionary.di.historyFragmentModule
+import ru.gressor.skyengdictionary.di.searchFragmentModule
 
 class App: Application() {
 
@@ -13,7 +14,10 @@ class App: Application() {
 
         startKoin{
             androidContext(applicationContext)
-            modules(listOf(applicationModule, mainFragmentModule))
+            modules(listOf(
+                applicationModule,
+                searchFragmentModule,
+                historyFragmentModule))
         }
     }
 }

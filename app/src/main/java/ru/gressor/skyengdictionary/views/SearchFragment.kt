@@ -10,24 +10,26 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 import ru.gressor.skyengdictionary.MainActivity
-import ru.gressor.skyengdictionary.databinding.FragmentMainBinding
+import ru.gressor.skyengdictionary.databinding.FragmentSearchBinding
+import ru.gressor.skyengdictionary.di.NAME_SEARCH
 import ru.gressor.skyengdictionary.entities.SearchData
 import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
 class SearchFragment : Fragment(),
     SearchListAdapter.OnItemClickListener, TextView.OnEditorActionListener {
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentSearchBinding
     private var adapter: SearchListAdapter? = null
 
-    private val viewModel: SearchViewModel by viewModel()
+    private val viewModel: SearchViewModel by viewModel(named(NAME_SEARCH))
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentMainBinding.inflate(inflater, container, false)
+    ): View = FragmentSearchBinding.inflate(inflater, container, false)
         .also {
             binding = it
         }.root
@@ -40,6 +42,13 @@ class SearchFragment : Fragment(),
         binding.etWord.setOnEditorActionListener(this)
         binding.ilWordContainer.setStartIconOnClickListener {
             onEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null)
+        }
+    }
+
+    override fun onItemClick(word: DictWord) {
+        val activity = requireActivity()
+        if (activity is MainActivity) {
+            activity.showFragment(WordFragment.getInstance(word))
         }
     }
 
@@ -66,17 +75,6 @@ class SearchFragment : Fragment(),
         }
     }
 
-    override fun onItemClick(word: DictWord) {
-        val activity = requireActivity()
-        if (activity is MainActivity) {
-            activity.showFragment(WordFragment.getInstance(word))
-        }
-    }
-
-    private fun showEmpty() {
-        makeVisible(empty = true)
-    }
-
     private fun showWords(wordList: List<DictWord>) {
         makeVisible(recycler = true)
 
@@ -91,23 +89,27 @@ class SearchFragment : Fragment(),
         }
     }
 
+    private fun showEmpty() {
+        makeVisible(empty = true)
+    }
+
     private fun showLoading(progress: Int?) {
         makeVisible(loading = true)
 
         if (progress == null) {
-            binding.pbInfiniteProgress.visibility = View.VISIBLE
-            binding.pbMeasuredProgress.visibility = View.GONE
+            binding.stateContainers.pbInfiniteProgress.visibility = View.VISIBLE
+            binding.stateContainers.pbMeasuredProgress.visibility = View.GONE
         } else {
-            binding.pbInfiniteProgress.visibility = View.GONE
-            binding.pbMeasuredProgress.visibility = View.VISIBLE
-            binding.pbMeasuredProgress.progress = progress
+            binding.stateContainers.pbInfiniteProgress.visibility = View.GONE
+            binding.stateContainers.pbMeasuredProgress.visibility = View.VISIBLE
+            binding.stateContainers.pbMeasuredProgress.progress = progress
         }
     }
 
     private fun showError(error: Throwable) {
         makeVisible(error = true)
 
-        binding.tvErrorMessage.text = "$error"
+        binding.stateContainers.tvErrorMessage.text = "$error"
     }
 
     private fun makeVisible(
@@ -117,8 +119,8 @@ class SearchFragment : Fragment(),
         error: Boolean = false
     ) {
         binding.rvWords.visibility = if (recycler) View.VISIBLE else View.GONE
-        binding.containerEmpty.visibility = if (empty) View.VISIBLE else View.GONE
-        binding.containerLoading.visibility = if (loading) View.VISIBLE else View.GONE
-        binding.containerError.visibility = if (error) View.VISIBLE else View.GONE
+        binding.stateContainers.containerEmpty.visibility = if (empty) View.VISIBLE else View.GONE
+        binding.stateContainers.containerLoading.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.stateContainers.containerError.visibility = if (error) View.VISIBLE else View.GONE
     }
 }
