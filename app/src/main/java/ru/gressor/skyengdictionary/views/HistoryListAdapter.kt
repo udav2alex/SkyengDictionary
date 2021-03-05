@@ -7,7 +7,8 @@ import ru.gressor.skyengdictionary.data.local.HistoryItem
 import ru.gressor.skyengdictionary.databinding.FragmentHistoryRvItemBinding
 
 class HistoryListAdapter(
-    private var itemsList: List<HistoryItem>
+    private var itemsList: List<HistoryItem>,
+    private val clickListener: ClickListener
 ) : RecyclerView.Adapter<HistoryListAdapter.HistoryItemHolder>() {
 
     fun setData(itemsList: List<HistoryItem>) {
@@ -33,9 +34,17 @@ class HistoryListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HistoryItem) {
+            itemView.setOnClickListener {
+                clickListener.onClick(item)
+            }
+
             with(binding) {
                 tvHistoryItem.text = item.word
             }
         }
+    }
+
+    interface ClickListener {
+        fun onClick(historyItem: HistoryItem)
     }
 }

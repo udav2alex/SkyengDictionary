@@ -2,6 +2,10 @@ package ru.gressor.skyengdictionary
 
 class MainContract {
 
+    interface SearchRunner {
+        fun runSearch(search: String)
+    }
+
     interface Interactor<T> {
         suspend fun getData(word: String, isOnline: Boolean): T
     }

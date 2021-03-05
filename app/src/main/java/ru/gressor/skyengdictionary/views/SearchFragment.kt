@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import ru.gressor.skyengdictionary.MainActivity
@@ -24,6 +25,19 @@ class SearchFragment : Fragment(),
     private var adapter: SearchListAdapter? = null
 
     private val viewModel: SearchViewModel by viewModel(named(NAME_SEARCH))
+
+    private var searchString: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState == null) {
+            searchString = arguments?.getString(BUNDLE_TAG_SEARCH_STRING)
+            searchString?.let {
+                viewModel.getData(it, true)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +57,16 @@ class SearchFragment : Fragment(),
         binding.ilWordContainer.setStartIconOnClickListener {
             onEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null)
         }
+
+        if (savedInstanceState == null && searchString != null) {
+            binding.etWord.setText(searchString)
+        }
+    }
+
+    fun searchIt(search: String) {
+        binding.etWord.setText(search)
+        searchString = search
+        viewModel.getData(search, true)
     }
 
     override fun onItemClick(word: DictWord) {
@@ -120,7 +144,23 @@ class SearchFragment : Fragment(),
     ) {
         binding.rvWords.visibility = if (recycler) View.VISIBLE else View.GONE
         binding.stateContainers.containerEmpty.visibility = if (empty) View.VISIBLE else View.GONE
-        binding.stateContainers.containerLoading.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.stateContainers.containerLoading.visibility =
+            if (loading) View.VISIBLE else View.GONE
         binding.stateContainers.containerError.visibility = if (error) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        private const val BUNDLE_TAG_SEARCH_STRING =
+            "ru.gressor.skyengdictionary.views.SearchFragment.search"
+
+        fun getSearchingInstance(search: String): SearchFragment {
+            val fragment = SearchFragment()
+            val bundle = Bundle()
+
+            bundle.putString(BUNDLE_TAG_SEARCH_STRING, search)
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 }

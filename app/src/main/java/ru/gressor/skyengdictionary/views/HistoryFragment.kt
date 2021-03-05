@@ -8,18 +8,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
+import ru.gressor.skyengdictionary.MainActivity
+import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.data.local.HistoryItem
 import ru.gressor.skyengdictionary.databinding.FragmentHistoryBinding
 import ru.gressor.skyengdictionary.di.NAME_HISTORY
 import ru.gressor.skyengdictionary.entities.HistoryData
 import ru.gressor.skyengdictionary.viewmodels.HistoryViewModel
+import java.lang.RuntimeException
 
-class HistoryFragment: Fragment() {
+class HistoryFragment: Fragment(), HistoryListAdapter.ClickListener {
 
     private lateinit var binding: FragmentHistoryBinding
     private var adapter: HistoryListAdapter? = null
 
     private val viewModel: HistoryViewModel by viewModel(named(NAME_HISTORY))
+
+    private lateinit var searchRunner: MainContract.SearchRunner
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +37,16 @@ class HistoryFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
         binding.rvHistory.layoutManager = LinearLayoutManager(context)
+
+        if (requireActivity() is MainContract.SearchRunner) {
+            searchRunner = requireActivity() as MainContract.SearchRunner
+        } else {
+            throw RuntimeException("Activity can't run search!")
+        }
+    }
+
+    override fun onClick(historyItem: HistoryItem) {
+        searchRunner.runSearch(historyItem.word)
     }
 
     private fun renderData(data: HistoryData) {
@@ -47,7 +62,7 @@ class HistoryFragment: Fragment() {
         makeVisible(recycler = true)
 
         if (adapter == null) {
-            adapter = HistoryListAdapter(wordList)
+            adapter = HistoryListAdapter(wordList, this)
             binding.rvHistory.adapter = adapter
         } else {
             if (binding.rvHistory.adapter == null) {
