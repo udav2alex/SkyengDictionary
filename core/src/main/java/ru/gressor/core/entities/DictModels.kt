@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.entities
+package ru.gressor.core.entities
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose

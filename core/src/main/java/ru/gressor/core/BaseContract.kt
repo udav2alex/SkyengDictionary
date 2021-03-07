@@ -1,6 +1,6 @@
-package ru.gressor.skyengdictionary
+package ru.gressor.core
 
-class MainContract {
+class BaseContract {
 
     interface SearchRunner {
         fun runSearch(search: String)

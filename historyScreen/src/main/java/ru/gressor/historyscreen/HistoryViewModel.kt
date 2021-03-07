@@ -1,13 +1,12 @@
 package ru.gressor.historyscreen
 
 import kotlinx.coroutines.launch
-import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.entities.HistoryData
-import ru.gressor.skyengdictionary.viewmodels.BaseViewModel
+import ru.gressor.core.BaseContract
+import ru.gressor.core.entities.HistoryData
 
 class HistoryViewModel(
-    private val interactor: MainContract.Interactor<HistoryData>
-): BaseViewModel<HistoryData>() {
+    private val interactor: BaseContract.Interactor<HistoryData>
+): ru.gressor.core.BaseViewModel<HistoryData>() {
 
     init {
         stateMutableLiveData.value = HistoryData.Loading(null)

@@ -3,11 +3,12 @@ package ru.gressor.skyengdictionary.viewmodels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.entities.SearchData
+import ru.gressor.core.BaseViewModel
+import ru.gressor.core.BaseContract
+import ru.gressor.core.entities.SearchData
 
 class SearchViewModel constructor(
-    private val interactor: MainContract.Interactor<SearchData>
+    private val interactor: BaseContract.Interactor<SearchData>
 ) : BaseViewModel<SearchData>() {
 
     init {

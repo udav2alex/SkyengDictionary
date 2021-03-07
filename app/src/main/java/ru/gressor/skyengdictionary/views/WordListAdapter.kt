@@ -1,12 +1,13 @@
 package ru.gressor.skyengdictionary.views
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.gressor.skyengdictionary.R
 import ru.gressor.skyengdictionary.databinding.FragmentWordRvItemBinding
-import ru.gressor.skyengdictionary.entities.Meaning2
+import ru.gressor.core.entities.Meaning2
 
 class WordListAdapter(
     private val meanings: List<Meaning2>
@@ -32,6 +33,7 @@ class WordListAdapter(
         fun bind(meaning: Meaning2) {
             with(binding) {
                 meaning.let {
+                    @SuppressLint("SetTextI18n")
                     tvTranscription.text = "[ ${it.transcription} ]"
                     tvTranslation.text = it.translation?.text
 

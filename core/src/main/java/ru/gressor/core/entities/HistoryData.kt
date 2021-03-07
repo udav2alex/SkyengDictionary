@@ -1,6 +1,4 @@
-package ru.gressor.skyengdictionary.entities
-
-import ru.gressor.skyengdictionary.data.local.HistoryItem
+package ru.gressor.core.entities
 
 sealed class HistoryData {
     object Empty : HistoryData()

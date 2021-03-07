@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
-import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.data.local.HistoryItem
-import ru.gressor.skyengdictionary.di.NAME_HISTORY
-import ru.gressor.skyengdictionary.entities.HistoryData
+import ru.gressor.core.BaseContract
+import ru.gressor.core.di.NAME_HISTORY
+import ru.gressor.core.entities.HistoryItem
+import ru.gressor.core.entities.HistoryData
 import ru.gressor.historyscreen.databinding.FragmentHistoryBinding
 import java.lang.RuntimeException
 
@@ -22,7 +22,7 @@ class HistoryFragment : Fragment(), HistoryListAdapter.ClickListener {
 
     private val viewModel: HistoryViewModel by viewModel(named(NAME_HISTORY))
 
-    private lateinit var searchRunner: MainContract.SearchRunner
+    private lateinit var searchRunner: BaseContract.SearchRunner
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +36,8 @@ class HistoryFragment : Fragment(), HistoryListAdapter.ClickListener {
         viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
         binding.rvHistory.layoutManager = LinearLayoutManager(context)
 
-        if (requireActivity() is MainContract.SearchRunner) {
-            searchRunner = requireActivity() as MainContract.SearchRunner
+        if (requireActivity() is BaseContract.SearchRunner) {
+            searchRunner = requireActivity() as BaseContract.SearchRunner
         } else {
             throw RuntimeException("Activity can't run search!")
         }

@@ -3,7 +3,7 @@ package ru.gressor.historyscreen
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.gressor.skyengdictionary.data.local.HistoryItem
+import ru.gressor.core.entities.HistoryItem
 import ru.gressor.historyscreen.databinding.FragmentHistoryRvItemBinding
 
 class HistoryListAdapter(

@@ -9,14 +9,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
+import ru.gressor.core.di.NAME_SEARCH
+import ru.gressor.core.entities.SearchData
+import ru.gressor.core.entities.DictWord
 import ru.gressor.skyengdictionary.MainActivity
 import ru.gressor.skyengdictionary.databinding.FragmentSearchBinding
-import ru.gressor.skyengdictionary.di.NAME_SEARCH
-import ru.gressor.skyengdictionary.entities.SearchData
-import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
 class SearchFragment : Fragment(),
