@@ -39,12 +39,13 @@ class MainActivity : AppCompatActivity(), MainContract.SearchRunner {
     override fun runSearch(search: String) {
         var fragment: Fragment? = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG_SEARCH)
         if (fragment == null) {
-            fragment = SearchFragment.getSearchingInstance(search)
+            fragment = SearchFragment()
         }
 
         fragment as SearchFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fl_container, fragment, FRAGMENT_TAG_SEARCH)
+            .setReorderingAllowed(true)
             .addToBackStack(null)
             .commit()
 
@@ -72,8 +73,11 @@ class MainActivity : AppCompatActivity(), MainContract.SearchRunner {
     fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fl_container, fragment)
-            .addToBackStack(null)
             .commit()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
     companion object {

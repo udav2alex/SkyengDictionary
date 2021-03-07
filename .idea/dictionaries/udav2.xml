@@ -1,10 +1,20 @@
 <component name="ProjectDictionaryState">
   <dictionary name="udav2">
     <words>
+      <w>bumptech</w>
+      <w>constraintlayout</w>
       <w>gressor</w>
+      <w>gson</w>
       <w>interactor</w>
+      <w>jetbrains</w>
+      <w>koin</w>
+      <w>kotlinx</w>
+      <w>multidex</w>
+      <w>okhttp</w>
       <w>skyeng</w>
       <w>skyengdictionary</w>
+      <w>squareup</w>
+      <w>viewmodel</w>
     </words>
   </dictionary>
 </component>
