@@ -16,6 +16,12 @@ object Config {
     val javaVersion = JavaVersion.VERSION_1_8
 }
 
+object Modules {
+    const val app = ":app"
+
+    const val featureHistoryScreen = ":historyScreen"
+}
+
 object Tools {
     const val multidex = "com.android.support:multidex:1.0.3"
 }

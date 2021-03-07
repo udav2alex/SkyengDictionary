@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.interactors
+package ru.gressor.historyscreen
 
 import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.data.local.HistoryItem

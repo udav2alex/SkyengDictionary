@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.gressor.skyengdictionary.views.HistoryFragment
+import ru.gressor.historyscreen.HistoryFragment
 import ru.gressor.skyengdictionary.views.SearchFragment
 import ru.gressor.skyengdictionary.views.SettingsFragment
 import java.lang.RuntimeException

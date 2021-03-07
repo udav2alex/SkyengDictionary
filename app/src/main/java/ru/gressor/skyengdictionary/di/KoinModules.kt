@@ -11,13 +11,13 @@ import ru.gressor.skyengdictionary.data.remote.RetrofitImpl
 import ru.gressor.skyengdictionary.entities.SearchData
 import ru.gressor.skyengdictionary.entities.DictWord
 import ru.gressor.skyengdictionary.entities.HistoryData
-import ru.gressor.skyengdictionary.interactors.HistoryInteractor
 import ru.gressor.skyengdictionary.interactors.SearchInteractor
-import ru.gressor.skyengdictionary.repos.HistoryRepository
 import ru.gressor.skyengdictionary.repos.SearchRepository
 import ru.gressor.skyengdictionary.repos.SearchRepositoryLocal
-import ru.gressor.skyengdictionary.viewmodels.HistoryViewModel
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
+import ru.gressor.historyscreen.HistoryInteractor
+import ru.gressor.historyscreen.HistoryRepository
+import ru.gressor.historyscreen.HistoryViewModel
 
 val applicationModule = module {
     single<HistoryRoomDB> {

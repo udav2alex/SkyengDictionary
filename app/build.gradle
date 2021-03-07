@@ -33,6 +33,8 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.featureHistoryScreen)
+
     implementation Tools.multidex
     implementation AndroidX.appCompat
 

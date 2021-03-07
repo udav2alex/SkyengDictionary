@@ -1,2 +1,3 @@
+include ':historyScreen'
 include ':app'
 rootProject.name = "SkyengDictionary"

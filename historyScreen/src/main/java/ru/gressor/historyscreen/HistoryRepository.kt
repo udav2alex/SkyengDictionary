@@ -1,8 +1,7 @@
-package ru.gressor.skyengdictionary.repos
+package ru.gressor.historyscreen
 
 import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.data.local.HistoryItem
-import ru.gressor.skyengdictionary.entities.DictWord
 
 class HistoryRepository(
     private val dataSource: MainContract.DataSource<List<HistoryItem>>

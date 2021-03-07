@@ -1,8 +1,9 @@
-package ru.gressor.skyengdictionary.viewmodels
+package ru.gressor.historyscreen
 
 import kotlinx.coroutines.launch
 import ru.gressor.skyengdictionary.MainContract
 import ru.gressor.skyengdictionary.entities.HistoryData
+import ru.gressor.skyengdictionary.viewmodels.BaseViewModel
 
 class HistoryViewModel(
     private val interactor: MainContract.Interactor<HistoryData>
