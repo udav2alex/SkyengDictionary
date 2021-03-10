@@ -3,75 +3,46 @@ package ru.gressor.skyengdictionary.views
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.gressor.skyengdictionary.R
-import ru.gressor.skyengdictionary.databinding.FragmentMainRvItemBinding
-import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.skyengdictionary.databinding.FragmentWordRvItemBinding
+import ru.gressor.skyengdictionary.entities.Meaning2
 
 class WordListAdapter(
-    private var wordList: List<DictWord>,
-    private var onItemClickListener: OnItemClickListener
-) : RecyclerView.Adapter<WordListAdapter.WordHolder>() {
+    private val meanings: List<Meaning2>
+) : RecyclerView.Adapter<WordListAdapter.TranslationHolder>() {
 
-    fun setData(wordList: List<DictWord>) {
-        this.wordList = wordList
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordHolder =
-        WordHolder(
-            FragmentMainRvItemBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TranslationHolder =
+        TranslationHolder(
+            FragmentWordRvItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
 
-    override fun onBindViewHolder(holder: WordHolder, position: Int) {
-        holder.bind(position)
+    override fun onBindViewHolder(holder: TranslationHolder, position: Int) {
+        holder.bind(meanings[position])
     }
 
-    override fun getItemCount() = if (wordList.isNullOrEmpty()) 1 else wordList.size
+    override fun getItemCount() = meanings.size
 
-    inner class WordHolder(
-        private val binding: FragmentMainRvItemBinding
+    inner class TranslationHolder(
+        private val binding: FragmentWordRvItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(position: Int) = with(binding) {
-            if (wordList.isNullOrEmpty()) {
-                tvWord.text = ""
-                tvWordId.text = ""
-                tvTranslation.text = binding.root.context.getString(R.string.no_translations)
-                return
-            }
+        fun bind(meaning: Meaning2) {
+            with(binding) {
+                meaning.let {
+                    tvTranscription.text = "[ ${it.transcription} ]"
+                    tvTranslation.text = it.translation?.text
 
-            wordList[position].let { word ->
-                itemView.setOnClickListener {
-                    onItemClickListener.onItemClick(word)
+                    Glide.with(root)
+                        .load("https:${it.imageUrl}")
+                        .placeholder(R.drawable.ic_no_photo_vector)
+                        .error(R.drawable.ic_load_error_vector)
+                        .centerCrop()
+                        .into(ivImage)
                 }
-
-                tvWord.text = word.text
-                tvWordId.text = word.id.toString()
-
-                tvTranslation.text =
-                    when {
-                        word.meanings.isNullOrEmpty() -> {
-                            binding.root.context.getString(R.string.no_translations)
-                        }
-                        word.meanings.size == 1 -> {
-                            word.meanings[0].translation?.text
-                        }
-                        else -> {
-                            word.meanings[0].translation?.text + " " +
-                                    binding.root.context.resources.getQuantityString(
-                                        R.plurals.translation_variants,
-                                        word.meanings.lastIndex,
-                                        word.meanings.lastIndex
-                                    )
-                        }
-                    }
             }
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(word: DictWord)
     }
 }

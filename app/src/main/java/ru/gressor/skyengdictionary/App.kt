@@ -1,9 +1,11 @@
 package ru.gressor.skyengdictionary
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import ru.gressor.skyengdictionary.di.applicationModule
-import ru.gressor.skyengdictionary.di.mainFragmentModule
+import ru.gressor.skyengdictionary.di.historyFragmentModule
+import ru.gressor.skyengdictionary.di.searchFragmentModule
 
 class App: Application() {
 
@@ -11,7 +13,11 @@ class App: Application() {
         super.onCreate()
 
         startKoin{
-            modules(listOf(applicationModule, mainFragmentModule))
+            androidContext(applicationContext)
+            modules(listOf(
+                applicationModule,
+                searchFragmentModule,
+                historyFragmentModule))
         }
     }
 }

@@ -4,6 +4,12 @@
     <string name="enter_to_translate">Enter to translate</string>
     <string name="no_translations">No translations</string>
     <string name="type_word_or_phrase_to_translate">Type word or phrase to translate…</string>
+    <string name="play_sound">Play sound</string>
+    <string name="favorite_toggle">Favorite toggle</string>
+    <string name="meaning_picture">Meaning picture</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_history">History</string>
+    <string name="menu_settings">Settings</string>
     <plurals name="translation_variants">
         <item quantity="one">+%1$d other option</item>
         <item quantity="other">+%1$d other options</item>
