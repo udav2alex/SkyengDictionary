@@ -44,7 +44,7 @@
 
         <include
             android:id="@+id/state_containers"
-            layout="@layout/state_containers" />
+            layout="@layout/state_containers_main" />
 
     </FrameLayout>
 

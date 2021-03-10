@@ -1,10 +1,11 @@
 package ru.gressor.skyengdictionary.data.local
 
-import ru.gressor.skyengdictionary.MainContract
+import ru.gressor.core.BaseContract
+import ru.gressor.core.entities.HistoryItem
 
 class HistoryDataSource(
     private val dao: HistoryDAO
-): MainContract.DataSource<List<HistoryItem>> {
+): BaseContract.DataSource<List<HistoryItem>> {
 
     override suspend fun getData(word: String) = dao.getHistory()
 }

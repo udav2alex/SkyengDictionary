@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.data.local
+package ru.gressor.core.entities
 
 import androidx.room.Entity
 import androidx.room.Index

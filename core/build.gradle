@@ -1,0 +1,21 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+}
+
+dependencies {
+    implementation Kotlin.kotlinStdlib
+    implementation Kotlin.coreKtx
+
+    implementation Koin.koinAndroid
+    implementation Koin.koinAndroidxViewmodel
+
+    implementation Retrofit.converterGson
+
+    implementation Room.roomRuntime
+
+    testImplementation Testing.junit
+    androidTestImplementation Testing.androidxJunit
+    androidTestImplementation Testing.espressoCore
+}

@@ -3,7 +3,7 @@ package ru.gressor.skyengdictionary.data.remote
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.core.entities.DictWord
 
 interface ServiceAPI {
 

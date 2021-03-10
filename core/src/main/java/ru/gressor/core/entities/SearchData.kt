@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.entities
+package ru.gressor.core.entities
 
 sealed class SearchData {
     object Empty : SearchData()

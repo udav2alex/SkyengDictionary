@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.core.entities.DictWord
 import java.lang.IllegalStateException
 
 class RetrofitImpl(

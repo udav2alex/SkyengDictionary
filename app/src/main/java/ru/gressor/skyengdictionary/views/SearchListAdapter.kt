@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.gressor.skyengdictionary.R
 import ru.gressor.skyengdictionary.databinding.FragmentSearchRvItemBinding
-import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.core.entities.DictWord
 
 class SearchListAdapter(
     private var wordList: List<DictWord>,

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.gressor.skyengdictionary.databinding.FragmentWordBinding
-import ru.gressor.skyengdictionary.entities.DictWord
+import ru.gressor.core.entities.DictWord
 
 class WordFragment : Fragment() {
     private lateinit var binding: FragmentWordBinding

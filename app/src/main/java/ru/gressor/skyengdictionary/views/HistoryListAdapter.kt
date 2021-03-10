@@ -3,8 +3,8 @@ package ru.gressor.skyengdictionary.views
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.gressor.skyengdictionary.data.local.HistoryItem
-import ru.gressor.skyengdictionary.databinding.FragmentHistoryRvItemBinding
+import ru.gressor.core.entities.HistoryItem
+import ru.gressor.historyscreen.databinding.FragmentHistoryRvItemBinding
 
 class HistoryListAdapter(
     private var itemsList: List<HistoryItem>,

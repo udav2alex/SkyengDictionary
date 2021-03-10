@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.views
+package ru.gressor.historyscreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,23 +8,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
-import ru.gressor.skyengdictionary.MainActivity
-import ru.gressor.skyengdictionary.MainContract
-import ru.gressor.skyengdictionary.data.local.HistoryItem
-import ru.gressor.skyengdictionary.databinding.FragmentHistoryBinding
-import ru.gressor.skyengdictionary.di.NAME_HISTORY
-import ru.gressor.skyengdictionary.entities.HistoryData
-import ru.gressor.skyengdictionary.viewmodels.HistoryViewModel
+import ru.gressor.core.BaseContract
+import ru.gressor.core.di.NAME_HISTORY
+import ru.gressor.core.entities.HistoryItem
+import ru.gressor.core.entities.HistoryData
+import ru.gressor.historyscreen.databinding.FragmentHistoryBinding
 import java.lang.RuntimeException
 
-class HistoryFragment: Fragment(), HistoryListAdapter.ClickListener {
+class HistoryFragment : Fragment(), HistoryListAdapter.ClickListener {
 
     private lateinit var binding: FragmentHistoryBinding
     private var adapter: HistoryListAdapter? = null
 
     private val viewModel: HistoryViewModel by viewModel(named(NAME_HISTORY))
 
-    private lateinit var searchRunner: MainContract.SearchRunner
+    private lateinit var searchRunner: BaseContract.SearchRunner
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +36,8 @@ class HistoryFragment: Fragment(), HistoryListAdapter.ClickListener {
         viewModel.liveData.observe(viewLifecycleOwner) { renderData(it) }
         binding.rvHistory.layoutManager = LinearLayoutManager(context)
 
-        if (requireActivity() is MainContract.SearchRunner) {
-            searchRunner = requireActivity() as MainContract.SearchRunner
+        if (requireActivity() is BaseContract.SearchRunner) {
+            searchRunner = requireActivity() as BaseContract.SearchRunner
         } else {
             throw RuntimeException("Activity can't run search!")
         }
@@ -103,7 +101,8 @@ class HistoryFragment: Fragment(), HistoryListAdapter.ClickListener {
     ) {
         binding.rvHistory.visibility = if (recycler) View.VISIBLE else View.GONE
         binding.stateContainers.containerEmpty.visibility = if (empty) View.VISIBLE else View.GONE
-        binding.stateContainers.containerLoading.visibility = if (loading) View.VISIBLE else View.GONE
+        binding.stateContainers.containerLoading.visibility =
+            if (loading) View.VISIBLE else View.GONE
         binding.stateContainers.containerError.visibility = if (error) View.VISIBLE else View.GONE
     }
 }

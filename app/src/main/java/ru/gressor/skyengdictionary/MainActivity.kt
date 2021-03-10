@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import ru.gressor.skyengdictionary.views.HistoryFragment
+import ru.gressor.core.BaseContract
+import ru.gressor.historyscreen.HistoryFragment
 import ru.gressor.skyengdictionary.views.SearchFragment
 import ru.gressor.skyengdictionary.views.SettingsFragment
 import java.lang.RuntimeException
 
-class MainActivity : AppCompatActivity(), MainContract.SearchRunner {
+class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +40,13 @@ class MainActivity : AppCompatActivity(), MainContract.SearchRunner {
     override fun runSearch(search: String) {
         var fragment: Fragment? = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG_SEARCH)
         if (fragment == null) {
-            fragment = SearchFragment.getSearchingInstance(search)
+            fragment = SearchFragment()
         }
 
         fragment as SearchFragment
         supportFragmentManager.beginTransaction()
             .replace(R.id.fl_container, fragment, FRAGMENT_TAG_SEARCH)
+            .setReorderingAllowed(true)
             .addToBackStack(null)
             .commit()
 
@@ -72,8 +74,11 @@ class MainActivity : AppCompatActivity(), MainContract.SearchRunner {
     fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fl_container, fragment)
-            .addToBackStack(null)
             .commit()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
     companion object {

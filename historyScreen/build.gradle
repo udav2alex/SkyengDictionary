@@ -1,0 +1,29 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(Modules.core)
+
+    implementation Kotlin.kotlinStdlib
+    implementation Kotlin.coreKtx
+    implementation Kotlin.kotlinxCoroutinesCore
+    implementation Kotlin.kotlinxCoroutinesAndroid
+
+    implementation AndroidX.appCompat
+    implementation Design.material
+
+    implementation Koin.koinAndroid
+    implementation Koin.koinAndroidxViewmodel
+
+    testImplementation Testing.junit
+    androidTestImplementation Testing.androidxJunit
+    androidTestImplementation Testing.espressoCore
+}

@@ -1,4 +1,4 @@
-package ru.gressor.skyengdictionary.viewmodels
+package ru.gressor.core
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
