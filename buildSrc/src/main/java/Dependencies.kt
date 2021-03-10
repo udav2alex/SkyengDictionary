@@ -27,6 +27,10 @@ object Tools {
     const val multidex = "com.android.support:multidex:1.0.3"
 }
 
+object GooglePlay {
+    const val core = "com.google.android.play:core:1.6.3"
+}
+
 object Kotlin {
     const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:1.4.31"
     const val coreKtx = "androidx.core:core-ktx:1.3.2"

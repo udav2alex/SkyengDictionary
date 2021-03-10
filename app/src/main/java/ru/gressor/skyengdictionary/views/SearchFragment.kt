@@ -16,6 +16,7 @@ import ru.gressor.core.entities.SearchData
 import ru.gressor.core.entities.DictWord
 import ru.gressor.skyengdictionary.MainActivity
 import ru.gressor.skyengdictionary.databinding.FragmentSearchBinding
+import ru.gressor.skyengdictionary.di.injectDependencies
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
 
 class SearchFragment : Fragment(),
@@ -23,6 +24,7 @@ class SearchFragment : Fragment(),
     private lateinit var binding: FragmentSearchBinding
     private var adapter: SearchListAdapter? = null
 
+    init { injectDependencies() }
     private val viewModel: SearchViewModel by viewModel(named(NAME_SEARCH))
 
     private var searchString: String? = null

@@ -16,6 +16,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    dynamicFeatures = [Modules.featureHistoryScreen]
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,8 +36,8 @@ android {
 
 dependencies {
     implementation project(Modules.core)
-    implementation project(Modules.featureHistoryScreen)
 
+    implementation GooglePlay.core
     implementation Tools.multidex
     implementation AndroidX.appCompat
 
@@ -65,4 +67,5 @@ dependencies {
     testImplementation Testing.junit
     androidTestImplementation Testing.androidxJunit
     androidTestImplementation Testing.espressoCore
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

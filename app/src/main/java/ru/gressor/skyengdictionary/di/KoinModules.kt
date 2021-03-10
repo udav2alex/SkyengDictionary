@@ -2,15 +2,13 @@ package ru.gressor.skyengdictionary.di
 
 import androidx.room.Room
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.loadKoinModules
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import ru.gressor.core.di.NAME_HISTORY
 import ru.gressor.core.di.NAME_SEARCH
 import ru.gressor.core.BaseContract
 import ru.gressor.core.entities.SearchData
 import ru.gressor.core.entities.DictWord
-import ru.gressor.core.entities.HistoryData
-import ru.gressor.core.entities.HistoryItem
 import ru.gressor.skyengdictionary.data.local.*
 import ru.gressor.skyengdictionary.data.remote.SearchDataSourceRemote
 import ru.gressor.skyengdictionary.data.remote.RetrofitImpl
@@ -18,9 +16,12 @@ import ru.gressor.skyengdictionary.interactors.SearchInteractor
 import ru.gressor.skyengdictionary.repos.SearchRepository
 import ru.gressor.skyengdictionary.repos.SearchRepositoryLocal
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
-import ru.gressor.historyscreen.HistoryInteractor
-import ru.gressor.historyscreen.HistoryRepository
-import ru.gressor.historyscreen.HistoryViewModel
+
+fun injectDependencies() = loadModules
+
+private val loadModules by lazy {
+    loadKoinModules(listOf(applicationModule, searchFragmentModule))
+}
 
 val applicationModule = module {
     single<HistoryRoomDB> {
@@ -30,9 +31,6 @@ val applicationModule = module {
     }
     single<HistoryDAO> {
         get<HistoryRoomDB>().getDAO()
-    }
-    single<BaseContract.Repository<List<HistoryItem>>>(named(NAME_HISTORY)) {
-        HistoryRepository(HistoryDataSource(get()))
     }
     single<BaseContract.RepositoryLocal<List<DictWord>>> {
         SearchRepositoryLocal(SearchDataSourceLocal(get()))
@@ -48,14 +46,5 @@ val searchFragmentModule = module {
     }
     viewModel(named(NAME_SEARCH)) {
         SearchViewModel(get(named(NAME_SEARCH)))
-    }
-}
-
-val historyFragmentModule = module {
-    factory<BaseContract.Interactor<HistoryData>>(named(NAME_HISTORY)) {
-        HistoryInteractor(get(named(NAME_HISTORY)))
-    }
-    viewModel(named(NAME_HISTORY)) {
-        HistoryViewModel(get(named(NAME_HISTORY)))
     }
 }

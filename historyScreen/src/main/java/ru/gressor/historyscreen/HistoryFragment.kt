@@ -20,6 +20,7 @@ class HistoryFragment : Fragment(), HistoryListAdapter.ClickListener {
     private lateinit var binding: FragmentHistoryBinding
     private var adapter: HistoryListAdapter? = null
 
+    init { injectDependencies() }
     private val viewModel: HistoryViewModel by viewModel(named(NAME_HISTORY))
 
     private lateinit var searchRunner: BaseContract.SearchRunner
