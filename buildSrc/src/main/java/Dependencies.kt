@@ -19,6 +19,7 @@ object Config {
 object Modules {
     const val app = ":app"
     const val core = ":core"
+    const val utils = ":utils"
 
     const val featureHistoryScreen = ":historyScreen"
 }

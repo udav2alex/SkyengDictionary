@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
+import org.koin.androidx.scope.fragmentScope
+import org.koin.androidx.viewmodel.scope.viewModel
 import ru.gressor.core.BaseContract
-import ru.gressor.core.di.NAME_HISTORY
 import ru.gressor.core.entities.HistoryItem
 import ru.gressor.core.entities.HistoryData
 import ru.gressor.historyscreen.databinding.FragmentHistoryBinding
@@ -21,7 +20,8 @@ class HistoryFragment : Fragment(), HistoryListAdapter.ClickListener {
     private var adapter: HistoryListAdapter? = null
 
     init { injectDependencies() }
-    private val viewModel: HistoryViewModel by viewModel(named(NAME_HISTORY))
+// TODO currentScope deprecated!
+    private val viewModel: HistoryViewModel by fragmentScope().inject()
 
     private lateinit var searchRunner: BaseContract.SearchRunner
 

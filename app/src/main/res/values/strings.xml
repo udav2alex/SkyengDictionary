@@ -12,6 +12,10 @@
     <string name="menu_settings">Settings</string>
 
     <string name="title_feature_history_screen">History Screen Feature :)</string>
+    <string name="theme_day">Day</string>
+    <string name="theme_night">Night</string>
+    <string name="theme_default">Default</string>
+    <string name="theme">Theme</string>
 
     <plurals name="translation_variants">
         <item quantity="one">+%1$d other option</item>

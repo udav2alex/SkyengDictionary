@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import ru.gressor.core.BaseContract
 import ru.gressor.skyengdictionary.views.SearchFragment
 import ru.gressor.skyengdictionary.views.SettingsFragment
+import ru.gressor.utils.ConnectivityLiveData
 import java.lang.RuntimeException
 
 class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
@@ -84,6 +86,24 @@ class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
             .replace(R.id.fl_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        subscribeConnectivityStatus()
+    }
+
+    private fun subscribeConnectivityStatus() {
+        ConnectivityLiveData(this)
+            .observe(this) {
+                if (!it) {
+                    Snackbar.make(bottomNavigationView, "Offline!", Snackbar.LENGTH_LONG)
+                        .show()
+                } else {
+                    Snackbar.make(bottomNavigationView, "Online!", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            }
     }
 
     private fun startInstallHistoryFeatureFragment() {

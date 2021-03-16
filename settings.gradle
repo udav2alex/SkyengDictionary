@@ -1,3 +1,4 @@
+include ':utils'
 include ':core'
 include ':historyScreen'
 include ':app'
