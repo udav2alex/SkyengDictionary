@@ -16,6 +16,7 @@
     <string name="theme_night">Night</string>
     <string name="theme_default">Default</string>
     <string name="theme">Theme</string>
+    <string name="network_setup">Network setup</string>
 
     <plurals name="translation_variants">
         <item quantity="one">+%1$d other option</item>

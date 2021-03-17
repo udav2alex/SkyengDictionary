@@ -1,7 +1,11 @@
 package ru.gressor.skyengdictionary
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,6 +17,7 @@ import ru.gressor.core.BaseContract
 import ru.gressor.skyengdictionary.views.SearchFragment
 import ru.gressor.skyengdictionary.views.SettingsFragment
 import ru.gressor.utils.ConnectivityLiveData
+import ru.gressor.utils.Prefs
 import java.lang.RuntimeException
 
 class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
@@ -22,6 +27,8 @@ class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setCurrentTheme()
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
@@ -42,6 +49,20 @@ class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
 
                 return@setOnNavigationItemSelectedListener true
             }
+    }
+
+    private fun setCurrentTheme() {
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+        val checkedChipId by Prefs(sharedPreferences, 0)
+
+        val currentTheme = when(checkedChipId) {
+            0 -> R.style.Theme_SkyengDictionary
+            1 -> R.style.Theme_SkyengDictionary_Day
+            2 -> R.style.Theme_SkyengDictionary_Night
+            else -> R.style.Theme_SkyengDictionary // fallback to default
+        }
+
+        setTheme(currentTheme)
     }
 
     override fun runSearch(search: String) {
@@ -98,6 +119,15 @@ class MainActivity : AppCompatActivity(), BaseContract.SearchRunner {
             .observe(this) {
                 if (!it) {
                     Snackbar.make(bottomNavigationView, "Offline!", Snackbar.LENGTH_LONG)
+                        .apply {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                setAction(R.string.network_setup) {
+                                    startActivityForResult(
+                                        Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY), 1111
+                                    )
+                                }
+                            }
+                        }
                         .show()
                 } else {
                     Snackbar.make(bottomNavigationView, "Online!", Snackbar.LENGTH_LONG)
