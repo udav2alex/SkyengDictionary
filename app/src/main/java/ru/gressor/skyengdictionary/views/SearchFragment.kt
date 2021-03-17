@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import ru.gressor.core.di.NAME_SEARCH
@@ -25,7 +26,7 @@ class SearchFragment : Fragment(),
     private var adapter: SearchListAdapter? = null
 
     init { injectDependencies() }
-    private val viewModel: SearchViewModel by viewModel(named(NAME_SEARCH))
+    private val viewModel: SearchViewModel by fragmentScope().inject()
 
     private var searchString: String? = null
 
@@ -88,7 +89,7 @@ class SearchFragment : Fragment(),
             viewModel.getData(text, true)
             return true
         }
-        return false
+        return true
     }
 
     private fun renderData(data: SearchData) {

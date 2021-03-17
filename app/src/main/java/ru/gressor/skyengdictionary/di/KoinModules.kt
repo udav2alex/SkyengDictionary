@@ -16,6 +16,7 @@ import ru.gressor.skyengdictionary.interactors.SearchInteractor
 import ru.gressor.skyengdictionary.repos.SearchRepository
 import ru.gressor.skyengdictionary.repos.SearchRepositoryLocal
 import ru.gressor.skyengdictionary.viewmodels.SearchViewModel
+import ru.gressor.skyengdictionary.views.SearchFragment
 
 fun injectDependencies() = loadModules
 
@@ -41,10 +42,12 @@ val applicationModule = module {
 }
 
 val searchFragmentModule = module {
-    factory<BaseContract.Interactor<SearchData>>(named(NAME_SEARCH)) {
-        SearchInteractor(get(named(NAME_SEARCH)), get())
-    }
-    viewModel(named(NAME_SEARCH)) {
-        SearchViewModel(get(named(NAME_SEARCH)))
+    scope<SearchFragment> {
+        factory<BaseContract.Interactor<SearchData>>(named(NAME_SEARCH)) {
+            SearchInteractor(get(named(NAME_SEARCH)), get())
+        }
+        viewModel {
+            SearchViewModel(get(named(NAME_SEARCH)))
+        }
     }
 }

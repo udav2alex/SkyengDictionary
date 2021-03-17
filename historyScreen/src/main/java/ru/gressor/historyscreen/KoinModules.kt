@@ -20,10 +20,13 @@ val historyFragmentModule = module {
     single<BaseContract.Repository<List<HistoryItem>>>(named(NAME_HISTORY)) {
         HistoryRepository(HistoryDataSource(get()))
     }
-    factory<BaseContract.Interactor<HistoryData>>(named(NAME_HISTORY)) {
-        HistoryInteractor(get(named(NAME_HISTORY)))
-    }
-    viewModel(named(NAME_HISTORY)) {
-        HistoryViewModel(get(named(NAME_HISTORY)))
+
+    scope<HistoryFragment> {
+        scoped<BaseContract.Interactor<HistoryData>>(named(NAME_HISTORY)) {
+            HistoryInteractor(get(named(NAME_HISTORY)))
+        }
+        viewModel {
+            HistoryViewModel(get(named(NAME_HISTORY)))
+        }
     }
 }
