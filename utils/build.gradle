@@ -1,0 +1,17 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+dependencies {
+    implementation Tools.multidex
+
+    implementation Kotlin.kotlinStdlib
+    implementation Kotlin.coreKtx
+
+    implementation AndroidX.appCompat
+
+    testImplementation Testing.junit
+    androidTestImplementation Testing.androidxJunit
+    androidTestImplementation Testing.espressoCore
+}
